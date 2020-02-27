@@ -3,7 +3,7 @@ import React from "react";
 const Forms = props => {
   return (
     <div>
-      {props.member.map(member => (
+      {props.members.map(member => (
         <div key={member.id}>
           <h2>{member.name}</h2>
           <p>{member.age}</p>

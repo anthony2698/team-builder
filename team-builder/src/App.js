@@ -5,7 +5,7 @@ import Form from './components/Form';
 import Forms from './components/Forms';
 
 function App() {
-  const [member, setMember] = useState([
+  const [members, setMembers] = useState([
     {
       id: 1,
       name: 'Anthony Carrillo',
@@ -15,12 +15,21 @@ function App() {
     }
   ]);
 
-  const addNewMember = 
+  const addNewMember = member => {
+    const newMember = {
+      id: Date.now(),
+      name: member.name,
+      age: member.age,
+      role: member.role,
+      roleDescription: member.roleDescription
+    }
+    setMembers([...members, newMember]);
+  }
 
   return (
     <div>
-      <Form />
-      <Forms member={member}/>
+      <Form addNewMember={addNewMember}/>
+      <Forms members={members}/>
     </div>
     
   );
