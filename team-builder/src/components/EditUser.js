@@ -1,42 +1,31 @@
 import React, { useState } from 'react';
 
-const Form = props => {
-    const [showAddUserForm, setShowAddUserForm] = useState(false);
-    const [member, setMember] = useState({
-        name: "",
-        age: "",
-        role: "",
-        roleDescription: ""
+const EditUser = ({ member, members, setMembers, setIsEditing, isEditing }) => {
+    const [inputValues, setInputValues] = useState({
+        name: member.name,
+        age: member.age,
+        role: member.role,
+        roleDescription: member.roleDescription
     });
 
     const handleChanges = event => {
-        setMember({
-            ...member, 
+        setInputValues({
+            ...inputValues, 
             [event.target.name]: event.target.value
         });
     };
 
     const submitForm = event => {
         event.preventDefault();
-        props.addNewMember(member);
-        setMember({
-            name: "",
-            age: "",
-            role: "",
-            roleDescription: ""
-        });
-        setShowAddUserForm(!showAddUserForm)
+        setMembers(members.map((el) => (
+            el.id === member.id ? inputValues : el
+        )));
+        setIsEditing(!isEditing);
     };
 
     return (
         <div>
-            { !showAddUserForm && (
-                <button onClick={() => setShowAddUserForm(true)}>
-                    Add User
-                </button>
-            )}
-            { showAddUserForm && (
-                <form onSubmit={submitForm}>
+            <form onSubmit={submitForm}>
                 <label htmlFor="name">
                     Name:
                 </label>
@@ -45,7 +34,7 @@ const Form = props => {
                     type="text" 
                     id="name" 
                     name="name" 
-                    value={member.name}
+                    value={inputValues.name}
                     />
                 <label htmlFor="age">
                     Age:
@@ -55,7 +44,7 @@ const Form = props => {
                     type="text" 
                     id="age" 
                     name="age" 
-                    value={member.age}/>
+                    value={inputValues.age}/>
                 <label htmlFor="role">
                     Role:
                 </label>
@@ -64,7 +53,7 @@ const Form = props => {
                     type="text" 
                     id="role" 
                     name="role" 
-                    value={member.role}
+                    value={inputValues.role}
                     />
                 <label htmlFor="roleDescription">
                     Role Description:
@@ -74,15 +63,14 @@ const Form = props => {
                     type="text" 
                     id="roleDescription" 
                     name="roleDescription" 
-                    value={member.roleDescription}
+                    value={inputValues.roleDescription}
                     />
                 <button type="submit">
-                    Add Member
+                    Confirm Edit's
                 </button>
             </form>
-            )}
         </div>
     )
 }
 
-export default Form;
+export default EditUser;
